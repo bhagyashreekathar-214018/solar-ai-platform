@@ -13,6 +13,7 @@ import { LiveKpiCard } from '../components/LiveKpiCard';
 import { PredictionCard } from '../components/PredictionCard';
 import { LiveChart } from '../components/LiveChart';
 import { DataSourceBadge } from '../components/DataSourceBadge';
+import { formatNumber, formatPercent } from '../utils/format';
 
 interface DashboardPageProps {
   liveData: LiveDataResponse | null;
@@ -66,7 +67,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
         <LiveKpiCard
           title="Predicted AC Power"
-          value={liveData ? liveData.predicted_ac_power.toLocaleString() : '---'}
+          value={formatNumber(liveData?.predicted_ac_power)}
           unit="W"
           subtitle="Random Forest Model"
           icon={<Zap className="w-5 h-5" />}
@@ -118,7 +119,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <div className="bg-slate-800/60 p-4 rounded-xl border border-slate-700/60">
               <div className="text-xs text-slate-400 font-medium">Historical Average AC Power</div>
               <div className="text-2xl lg:text-3xl font-bold font-mono text-slate-200 mt-1">
-                {comp.historical_average_ac_power.toLocaleString()} <span className="text-sm font-sans text-slate-400">W</span>
+                {formatNumber(comp.historical_average_ac_power)} <span className="text-sm font-sans text-slate-400">W</span>
               </div>
               <div className="text-[11px] text-slate-400 mt-1">Daytime plant baseline average</div>
             </div>
@@ -126,7 +127,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <div className="bg-slate-800/60 p-4 rounded-xl border border-slate-700/60">
               <div className="text-xs text-slate-400 font-medium">Current Predicted AC Power</div>
               <div className="text-2xl lg:text-3xl font-extrabold font-mono text-amber-400 mt-1">
-                {comp.predicted_ac_power.toLocaleString()} <span className="text-sm font-sans text-slate-300">W</span>
+                {formatNumber(comp.predicted_ac_power)} <span className="text-sm font-sans text-slate-300">W</span>
               </div>
               <div className="text-[11px] text-amber-300/80 mt-1">Random Forest live model output</div>
             </div>
@@ -142,7 +143,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 <span className={`text-2xl lg:text-3xl font-extrabold font-mono ${
                   comp.percentage_difference >= 0 ? 'text-emerald-400' : 'text-rose-400'
                 }`}>
-                  {comp.percentage_difference > 0 ? `+${comp.percentage_difference}` : comp.percentage_difference}%
+                  {formatPercent(comp.percentage_difference)}
                 </span>
               </div>
               <div className="text-[11px] text-slate-400 mt-1">Variance relative to historical baseline</div>
@@ -158,10 +159,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           unit={liveData.predicted_unit}
           timestamp={liveData.timestamp}
           modelUsed={liveData.model_used}
-          irradiation={liveData.environmental_data.solar_radiation_ghi}
-          ambientTemp={liveData.environmental_data.ambient_temperature}
+          irradiation={liveData.environmental_data?.solar_radiation_ghi}
+          ambientTemp={liveData.environmental_data?.ambient_temperature}
           moduleTemp={liveData.estimated_module_temperature}
-          hour={parseInt(liveData.time_short.split(':')[0]) || 12}
+          hour={parseInt(liveData.time_short?.split(':')[0] || '12') || 12}
           estimationMethod={liveData.estimation_method}
         />
       )}

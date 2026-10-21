@@ -167,9 +167,9 @@ export const HistoricalChart: React.FC<HistoricalChartProps> = ({
         );
 
       case 'prediction_error':
-        const errorData = chartData.map((d) => ({
+        const errorData = (chartData || []).map((d) => ({
           time: d.DATE_TIME,
-          error: Math.round(d.PREDICTED_AC_POWER - d.AC_POWER),
+          error: Math.round((d.PREDICTED_AC_POWER ?? 0) - (d.AC_POWER ?? 0)),
         }));
         return (
           <BarChart data={errorData}>

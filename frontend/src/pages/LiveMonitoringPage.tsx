@@ -5,6 +5,7 @@ import { StatusIndicator } from '../components/StatusIndicator';
 import { LiveKpiCard } from '../components/LiveKpiCard';
 import { LiveChart } from '../components/LiveChart';
 import { RefreshButton } from '../components/RefreshButton';
+import { formatNumber } from '../utils/format';
 
 interface LiveMonitoringPageProps {
   liveData: LiveDataResponse | null;
@@ -67,7 +68,7 @@ export const LiveMonitoringPage: React.FC<LiveMonitoringPageProps> = ({
 
         <LiveKpiCard
           title="Predicted AC Power"
-          value={liveData ? liveData.predicted_ac_power.toLocaleString() : '---'}
+          value={formatNumber(liveData?.predicted_ac_power)}
           unit="W"
           subtitle="Random Forest Output"
           icon={<Zap className="w-5 h-5" />}

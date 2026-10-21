@@ -105,10 +105,10 @@ export const PredictionForm: React.FC<PredictionFormProps> = ({
               unit={liveData.predicted_unit}
               timestamp={liveData.timestamp}
               modelUsed={liveData.model_used}
-              irradiation={liveData.environmental_data.solar_radiation_ghi}
-              ambientTemp={liveData.environmental_data.ambient_temperature}
+              irradiation={liveData.environmental_data?.solar_radiation_ghi}
+              ambientTemp={liveData.environmental_data?.ambient_temperature}
               moduleTemp={liveData.estimated_module_temperature}
-              hour={parseInt(liveData.time_short.split(':')[0]) || 12}
+              hour={parseInt(liveData.time_short?.split(':')[0] || '12') || 12}
               estimationMethod={liveData.estimation_method}
             />
           ) : (

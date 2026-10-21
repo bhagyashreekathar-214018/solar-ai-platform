@@ -1,15 +1,16 @@
 import React from 'react';
 import { Zap, ShieldCheck, Sun, Thermometer, Clock, Info } from 'lucide-react';
+import { formatNumber } from '../utils/format';
 
 interface PredictionCardProps {
-  predictedPower: number;
+  predictedPower?: number | null;
   unit?: string;
   timestamp?: string;
   modelUsed?: string;
-  irradiation?: number;
-  ambientTemp?: number;
-  moduleTemp?: number;
-  hour?: number;
+  irradiation?: number | null;
+  ambientTemp?: number | null;
+  moduleTemp?: number | null;
+  hour?: number | null;
   estimationMethod?: string;
 }
 
@@ -53,7 +54,7 @@ export const PredictionCard: React.FC<PredictionCardProps> = ({
             Predicted AC Power
           </span>
           <div className="text-4xl lg:text-5xl font-extrabold text-amber-400 font-mono tracking-tight my-2">
-            {predictedPower.toLocaleString()} <span className="text-2xl text-slate-300 font-sans font-medium">{unit}</span>
+            {formatNumber(predictedPower)} <span className="text-2xl text-slate-300 font-sans font-medium">{unit}</span>
           </div>
           <span className="inline-flex items-center gap-1 text-[11px] text-emerald-400 font-medium bg-emerald-950/60 border border-emerald-800/60 px-2.5 py-0.5 rounded-full mt-2">
             <ShieldCheck className="w-3.5 h-3.5" /> High Precision Regression
@@ -72,7 +73,7 @@ export const PredictionCard: React.FC<PredictionCardProps> = ({
               <Sun className="w-4 h-4 text-amber-400 shrink-0" />
               <div>
                 <div className="text-slate-400 text-[11px]">Solar Irradiation</div>
-                <div className="font-bold text-white font-mono">{irradiation} W/m²</div>
+                <div className="font-bold text-white font-mono">{formatNumber(irradiation, '0')} W/m²</div>
               </div>
             </div>
 
@@ -80,7 +81,7 @@ export const PredictionCard: React.FC<PredictionCardProps> = ({
               <Thermometer className="w-4 h-4 text-sky-400 shrink-0" />
               <div>
                 <div className="text-slate-400 text-[11px]">Ambient Temp</div>
-                <div className="font-bold text-white font-mono">{ambientTemp} °C</div>
+                <div className="font-bold text-white font-mono">{ambientTemp ?? '---'} °C</div>
               </div>
             </div>
 
@@ -88,7 +89,7 @@ export const PredictionCard: React.FC<PredictionCardProps> = ({
               <Thermometer className="w-4 h-4 text-rose-400 shrink-0" />
               <div>
                 <div className="text-slate-400 text-[11px]">Module Temp</div>
-                <div className="font-bold text-amber-300 font-mono">{moduleTemp} °C</div>
+                <div className="font-bold text-amber-300 font-mono">{moduleTemp ?? '---'} °C</div>
                 <div className="text-[10px] text-slate-400 italic">Estimated / User</div>
               </div>
             </div>
@@ -97,7 +98,7 @@ export const PredictionCard: React.FC<PredictionCardProps> = ({
               <Clock className="w-4 h-4 text-purple-400 shrink-0" />
               <div>
                 <div className="text-slate-400 text-[11px]">Current Hour</div>
-                <div className="font-bold text-white font-mono">{hour}:00 HRS</div>
+                <div className="font-bold text-white font-mono">{hour ?? '--'}:00 HRS</div>
               </div>
             </div>
           </div>

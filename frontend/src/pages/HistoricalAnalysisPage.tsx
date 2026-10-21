@@ -2,6 +2,7 @@ import React from 'react';
 import { HistoricalSummaryResponse } from '../types';
 import { HistoricalChart } from '../components/HistoricalChart';
 import { Database, Zap, Activity, Sun, Thermometer } from 'lucide-react';
+import { formatNumber } from '../utils/format';
 
 interface HistoricalAnalysisPageProps {
   summary: HistoricalSummaryResponse | null;
@@ -23,7 +24,7 @@ export const HistoricalAnalysisPage: React.FC<HistoricalAnalysisPageProps> = ({ 
           Historical Solar Plant Performance & Model Validation
         </h2>
         <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-          Analysis of measured historical inverter output against Random Forest model predictions across {summary.total_records} observation records.
+          Analysis of measured historical inverter output against Random Forest model predictions across {formatNumber(summary.total_records, '0')} observation records.
         </p>
       </div>
 
@@ -34,7 +35,7 @@ export const HistoricalAnalysisPage: React.FC<HistoricalAnalysisPageProps> = ({ 
             <Zap className="w-4 h-4 text-amber-500" /> Daytime Avg AC Power
           </div>
           <div className="text-2xl font-bold font-mono text-slate-900 dark:text-white mt-1">
-            {summary.daytime_avg_ac_power} W
+            {formatNumber(summary.daytime_avg_ac_power)} W
           </div>
           <div className="text-[10px] text-slate-400 mt-0.5">When Irradiation &gt; 5 W/m²</div>
         </div>
@@ -44,7 +45,7 @@ export const HistoricalAnalysisPage: React.FC<HistoricalAnalysisPageProps> = ({ 
             <Zap className="w-4 h-4 text-emerald-500" /> Max Peak AC Power
           </div>
           <div className="text-2xl font-bold font-mono text-slate-900 dark:text-white mt-1">
-            {summary.max_ac_power} W
+            {formatNumber(summary.max_ac_power)} W
           </div>
           <div className="text-[10px] text-slate-400 mt-0.5">Peak Inverter Output</div>
         </div>
@@ -54,7 +55,7 @@ export const HistoricalAnalysisPage: React.FC<HistoricalAnalysisPageProps> = ({ 
             <Sun className="w-4 h-4 text-amber-500" /> Avg Solar Irradiation
           </div>
           <div className="text-2xl font-bold font-mono text-slate-900 dark:text-white mt-1">
-            {summary.avg_irradiation} W/m²
+            {formatNumber(summary.avg_irradiation)} W/m²
           </div>
           <div className="text-[10px] text-slate-400 mt-0.5">Dataset Overall Mean</div>
         </div>
@@ -64,7 +65,7 @@ export const HistoricalAnalysisPage: React.FC<HistoricalAnalysisPageProps> = ({ 
             <Thermometer className="w-4 h-4 text-sky-500" /> Avg Ambient Temp
           </div>
           <div className="text-2xl font-bold font-mono text-slate-900 dark:text-white mt-1">
-            {summary.avg_ambient_temp} °C
+            {summary.avg_ambient_temp ?? '---'} °C
           </div>
           <div className="text-[10px] text-slate-400 mt-0.5">Environmental Ambient</div>
         </div>
@@ -74,7 +75,7 @@ export const HistoricalAnalysisPage: React.FC<HistoricalAnalysisPageProps> = ({ 
             <Thermometer className="w-4 h-4 text-rose-500" /> Avg Module Temp
           </div>
           <div className="text-2xl font-bold font-mono text-slate-900 dark:text-white mt-1">
-            {summary.avg_module_temp} °C
+            {summary.avg_module_temp ?? '---'} °C
           </div>
           <div className="text-[10px] text-slate-400 mt-0.5">Cell Operating Temp</div>
         </div>

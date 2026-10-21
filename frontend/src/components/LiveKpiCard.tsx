@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 interface LiveKpiCardProps {
   title: string;
-  value: string | number;
+  value?: string | number | null;
   unit?: string;
   subtitle?: string;
   icon: ReactNode;
@@ -69,7 +69,7 @@ export const LiveKpiCard: React.FC<LiveKpiCardProps> = ({
           </span>
           <div className="mt-2 flex items-baseline gap-1.5">
             <span className="text-2xl lg:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-              {value}
+              {value ?? '---'}
             </span>
             {unit && (
               <span className="text-sm font-medium text-slate-500 dark:text-slate-400">

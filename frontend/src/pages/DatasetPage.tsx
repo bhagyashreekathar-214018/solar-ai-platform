@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { DatasetInspection } from '../types';
 import { apiService } from '../services/api';
 import { Database, Upload, Download, Cpu, CheckCircle2, AlertTriangle, FileText, Table } from 'lucide-react';
+import { formatNumber } from '../utils/format';
 
 interface DatasetPageProps {
   datasetInfo: DatasetInspection | null;
@@ -140,32 +141,32 @@ export const DatasetPage: React.FC<DatasetPageProps> = ({ datasetInfo, onDataset
             <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 text-center">
               <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Total Rows</div>
               <div className="text-2xl font-extrabold text-slate-900 dark:text-white font-mono mt-1">
-                {datasetInfo.rows.toLocaleString()}
+                {formatNumber(datasetInfo.rows)}
               </div>
             </div>
 
             <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 text-center">
               <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Total Columns</div>
               <div className="text-2xl font-extrabold text-slate-900 dark:text-white font-mono mt-1">
-                {datasetInfo.columns}
+                {datasetInfo.columns ?? '---'}
               </div>
             </div>
 
             <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 text-center">
               <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Missing Values</div>
               <div className={`text-2xl font-extrabold font-mono mt-1 ${
-                datasetInfo.missing_values > 0 ? 'text-amber-500' : 'text-emerald-500'
+                (datasetInfo.missing_values ?? 0) > 0 ? 'text-amber-500' : 'text-emerald-500'
               }`}>
-                {datasetInfo.missing_values}
+                {datasetInfo.missing_values ?? 0}
               </div>
             </div>
 
             <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 text-center">
               <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Duplicate Rows</div>
               <div className={`text-2xl font-extrabold font-mono mt-1 ${
-                datasetInfo.duplicate_rows > 0 ? 'text-rose-500' : 'text-emerald-500'
+                (datasetInfo.duplicate_rows ?? 0) > 0 ? 'text-rose-500' : 'text-emerald-500'
               }`}>
-                {datasetInfo.duplicate_rows}
+                {datasetInfo.duplicate_rows ?? 0}
               </div>
             </div>
           </div>
@@ -202,7 +203,7 @@ export const DatasetPage: React.FC<DatasetPageProps> = ({ datasetInfo, onDataset
               <table className="w-full text-left text-xs">
                 <thead className="bg-slate-50 dark:bg-slate-900/80 text-slate-500 dark:text-slate-400 uppercase font-mono border-b border-slate-200 dark:border-slate-700">
                   <tr>
-                    {datasetInfo.column_names.map((col) => (
+                    {(datasetInfo.column_names || []).map((col) => (
                       <th key={col} className="px-4 py-3 font-semibold whitespace-nowrap">
                         {col}
                       </th>
@@ -210,9 +211,9 @@ export const DatasetPage: React.FC<DatasetPageProps> = ({ datasetInfo, onDataset
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-700/60 font-mono text-slate-700 dark:text-slate-300">
-                  {datasetInfo.preview.map((row, idx) => (
+                  {(datasetInfo.preview || []).map((row, idx) => (
                     <tr key={idx} className="hover:bg-slate-50 dark:hover:bg-slate-700/40">
-                      {datasetInfo.column_names.map((col) => (
+                      {(datasetInfo.column_names || []).map((col) => (
                         <td key={col} className="px-4 py-2.5 whitespace-nowrap">
                           {row[col] !== undefined ? String(row[col]) : '---'}
                         </td>

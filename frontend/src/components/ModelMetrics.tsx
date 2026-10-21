@@ -163,20 +163,23 @@ export const ModelMetrics: React.FC<ModelMetricsProps> = ({
           </h4>
 
           <div className="space-y-3">
-            {Object.entries(feature_importance).map(([feature, val]) => (
-              <div key={feature} className="space-y-1">
-                <div className="flex justify-between text-xs font-mono">
-                  <span className="text-slate-700 dark:text-slate-300 font-semibold">{feature}</span>
-                  <span className="text-amber-600 dark:text-amber-400 font-bold">{(val * 100).toFixed(2)}%</span>
+            {Object.entries(feature_importance || {}).map(([feature, val]) => {
+              const numVal = Number(val ?? 0);
+              return (
+                <div key={feature} className="space-y-1">
+                  <div className="flex justify-between text-xs font-mono">
+                    <span className="text-slate-700 dark:text-slate-300 font-semibold">{feature}</span>
+                    <span className="text-amber-600 dark:text-amber-400 font-bold">{(numVal * 100).toFixed(2)}%</span>
+                  </div>
+                  <div className="w-full h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-amber-500 to-amber-600 rounded-full transition-all duration-500"
+                      style={{ width: `${Math.max(numVal * 100, 2)}%` }}
+                    ></div>
+                  </div>
                 </div>
-                <div className="w-full h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-amber-500 to-amber-600 rounded-full transition-all duration-500"
-                    style={{ width: `${Math.max(val * 100, 2)}%` }}
-                  ></div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
