@@ -1,0 +1,24 @@
+{
+    "RandomForestRegressor": {
+        "MAE": 12.68,
+        "RMSE": 21.74,
+        "R2": 0.9996
+    },
+    "LinearRegression": {
+        "MAE": 35.7,
+        "RMSE": 49.33,
+        "R2": 0.9982
+    },
+    "best_model": "RandomForestRegressor",
+    "feature_importance": {
+        "AMBIENT_TEMPERATURE": 0.0001,
+        "MODULE_TEMPERATURE": 0.0002,
+        "IRRADIATION": 0.9996,
+        "HOUR": 0.0,
+        "DAY": 0.0,
+        "MONTH": 0.0,
+        "DAY_OF_WEEK": 0.0
+    },
+    "dataset_rows": 4320,
+    "test_samples": 864
+}
